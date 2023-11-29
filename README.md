@@ -14,10 +14,17 @@ concentrate on the core business logic and functionality.
 > While the generated application works fine, it is not ready for production use. Additional steps are required to
 > set up a secure and production-ready environment.
 
-**Table of Contents**
+## Table of Contents
 
-- [Installation](#installation)
-- [License](#license)
+* [Installation](#installation)
+* [Quickstart](#quickstart)
+    * [Environment variables](#environment-variables)
+    * [Usage](#usage)
+    * [Generated Application stack](#generated-application-stack)
+* [Roadmap](#roadmap)
+* [Contributing](#contributing)
+* [Acknowledgments](#acknowledgments)
+* [License](#license)
 
 ## Installation
 
