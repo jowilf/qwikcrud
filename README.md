@@ -78,9 +78,9 @@ what is planned for the future:
 
 ## Pricing
 
-`qwikcrud` makes one API call per prompt. Please note that `qwikcrud` will add a system prompt of around 900 tokens to your
-prompt. The cost of the API call may vary depending on the output length. For example, with the GPT-3.5-turbo-1106
-model, it will cost around $0.003 to generate your application.
+`qwikcrud` makes one API call per prompt. Please note that `qwikcrud` will add a system prompt of around 900 tokens to
+your prompt. For example, with the GPT-3.5-turbo-1106 model, it will cost around $0.003 to generate your application.
+The cost may vary depending on the output length.
 
 ## Contributing
 
