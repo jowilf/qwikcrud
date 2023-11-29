@@ -1,0 +1,10 @@
+from pydantic_settings import BaseSettings
+
+
+class Settings(BaseSettings):
+    SQLALCHEMY_DATABASE_URI: str = "sqlite:///db.sqlite"
+    PROJECT_NAME: str = "{{ app.name }}"
+    PROJECT_DESCRIPTION: str = "{{ app.description }}"
+
+
+settings = Settings()

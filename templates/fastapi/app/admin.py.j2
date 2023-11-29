@@ -1,0 +1,16 @@
+from app.db import engine
+{% for entity in app.entities %}
+from app.models import {{ entity.name }}
+{% endfor %}
+from starlette_admin.contrib.sqla import Admin, ModelView as BaseModelView
+
+class ModelView(BaseModelView):
+    exclude_fields_from_create = ["created_at", "updated_at"]
+    exclude_fields_from_edit = ["created_at", "updated_at"]
+
+def init_admin(app):
+    admin = Admin(engine, templates_dir="templates/admin")
+    {% for entity in app.entities %}
+    admin.add_view(ModelView({{ entity.name }}))
+    {% endfor %}
+    admin.mount_to(app)

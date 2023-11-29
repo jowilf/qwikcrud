@@ -1,0 +1,55 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ request.url_for('static', path='css/style.css') }}">
+    <title>{{ settings.PROJECT_NAME }}</title>
+</head>
+
+<body>
+<div class="h-screen flex flex-col bg-white">
+    <main class="h-full flex flex-col justify-center space-y-4">
+        <h1 class="text-4xl font-bold tracking-tighter sm:text-5xl lg:text-6xl text-center mx-8">
+            {{ settings.PROJECT_NAME }}
+        </h1>
+        <p class="mx-8 text-zinc-500 md:text-xl dark:text-zinc-400 text-center">
+            {{ settings.PROJECT_DESCRIPTION }}
+        </p>
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 px-4">
+            <div class="rounded-lg border shadow-sm p-4">
+                <h2 class="text-xl font-bold">Swagger Documentation</h2>
+                <p class="text-zinc-500 dark:text-zinc-400 mt-1">Explore and test your endpoints using Swagger UI.
+                </p>
+                <a class="mt-4 btn" href="/docs">
+                    Browse
+                </a>
+            </div>
+            <div class="rounded-lg border shadow-sm p-4">
+                <h2 class="text-xl font-bold">Redoc Documentation</h2>
+                <p class="text-zinc-500 dark:text-zinc-400 mt-1">View and interact with your endpoints using Redoc.
+                </p>
+                <a class="mt-4 btn" href="/redoc">
+                    Browse
+                </a>
+            </div>
+            <div class="rounded-lg border shadow-sm p-4">
+                <h2 class="text-xl font-bold">Admin Interface</h2>
+                <p class="text-zinc-500 dark:text-zinc-400 mt-1">Manage your entities with the admin interface.
+                </p>
+                <a class="mt-4 btn" href="/admin">
+                    Browse
+                </a>
+            </div>
+        </div>
+    </main>
+    <footer class="flex justify-center py-8 border-t border-zinc-300">
+        <p class="text-center text-sm text-zinc-500">&copy; 2023 {{ settings.PROJECT_NAME }} | Generated with <a
+                class="text-blue-500 underline" href="https://github.com/jowilf/qwikcrud"
+                target="_blank">QwikCrud</a></p>
+    </footer>
+</div>
+
+</body>
+
+</html>

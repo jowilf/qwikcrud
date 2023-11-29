@@ -1,0 +1,51 @@
+import datetime
+from typing import Optional
+from pydantic import BaseModel, Field, EmailStr
+{% for entity in app.entities %}
+{%- for field in entity.fields if field.type_ == "Enum" %}
+from app.enums import {{ field.name | title }}
+{% endfor %}
+{% endfor %}
+
+{% if app.has_file() %}
+
+class Thumbnail(BaseModel):
+    path: str
+
+
+class FileInfo(BaseModel):
+    filename: str
+    content_type: str
+    path: str
+    thumbnail: Optional[Thumbnail] = None
+{% endif %}
+
+
+{%- for entity in app.entities %}
+
+
+#-------------- {{ entity.name }} ------------------
+
+class {{ entity.name }}Create(BaseModel):
+    {% for field in entity.fields %}
+        {% if not (field.is_id() or field.is_file()) %}
+        {{ field.pydantic_def() }}
+        {% endif %}
+    {% endfor %}
+
+class {{ entity.name }}Update({{ entity.name }}Create):
+    pass
+
+class {{ entity.name }}Patch(BaseModel):
+    {% for field in entity.fields %}
+        {% if not (field.is_id() or field.is_file()) %}
+        {{ field.pydantic_def(True) }}
+        {% endif %}
+    {% endfor %}
+
+class {{ entity.name }}Out(BaseModel):
+    {% for field in entity.fields %}
+        {{ field.pydantic_def() }}
+    {% endfor %}
+
+{% endfor %}

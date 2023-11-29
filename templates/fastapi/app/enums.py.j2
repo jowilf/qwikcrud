@@ -1,0 +1,12 @@
+import enum
+
+
+{%- for entity in app.entities %}
+{%- for field in entity.fields if field.type_ == "Enum" %}
+
+class {{ field.name | title }}(str, enum.Enum):
+    {% for v in field.constraints.get_allowed_values() %}
+    {{ v | upper }} = "{{ v }}"
+    {% endfor %}
+{% endfor %}
+{% endfor %}
