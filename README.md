@@ -10,7 +10,7 @@ generation of comprehensive RESTful APIs and admin interfaces. Say goodbye to th
 writing repetitive CRUD (Create, Read, Update, Delete) endpoints when starting a new project, allowing developers to
 concentrate on the core business logic and functionality.
 
-> **⚠️ Warning**
+> [!WARNING]
 > While the generated application works fine, it is not ready for production use. Additional steps are required to
 > set up a secure and production-ready environment.
 
