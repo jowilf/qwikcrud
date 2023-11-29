@@ -98,5 +98,6 @@ known-first-party = ["qwikcrud"]
 [project.scripts]
 qwikcrud = "qwikcrud.cli:main"
 
+[tool.hatch.build.targets.wheel]
 [tool.hatch.build.targets.sdist]
-exclude = ["/.github"]
+include = ["qwikcrud", "prompts", "templates"]
