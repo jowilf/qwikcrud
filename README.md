@@ -1,7 +1,7 @@
 # qwikcrud
 
-[![PyPI - Version](https://img.shields.io/pypi/v/`qwikcrud`.svg)](https://pypi.org/project/`qwikcrud`)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/`qwikcrud`.svg)](https://pypi.org/project/`qwikcrud`)
+[![PyPI - Version](https://img.shields.io/pypi/v/qwikcrud.svg)](https://pypi.org/project/`qwikcrud`)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/qwikcrud.svg)](https://pypi.org/project/qwikcrud)
 
 -----
 
@@ -15,7 +15,7 @@ concentrate on the core business logic and functionality.
 > set up a secure and production-ready environment.
 
 
-[![`qwikcrud` demo](https://github.com/jowilf/`qwikcrud`/assets/31705179/fc010d41-597c-4ab7-a0ad-22570ba3b182)](https://vimeo.com/889381304 "`qwikcrud` demo - A restaurant management app")
+[![qwikcrud demo](https://github.com/jowilf/qwikcrud/assets/31705179/fc010d41-597c-4ab7-a0ad-22570ba3b182)](https://vimeo.com/889381304 "qwikcrud demo - A restaurant management app")
 
 ## Table of Contents
 
@@ -32,7 +32,7 @@ concentrate on the core business logic and functionality.
 ## Installation
 
 ```shell
-pip install `qwikcrud`
+pip install qwikcrud
 ```
 
 ## Quickstart
@@ -51,7 +51,7 @@ export OPENAI_MODEL="your_openai_model" # Defaults to "gpt-3.5-turbo-1106"
 To generate your application, open your terminal, run the following command and follow the instructions:
 
 ```shell
-`qwikcrud` -o output_dir
+qwikcrud -o output_dir
 ```
 
 ### Generated Application stack
