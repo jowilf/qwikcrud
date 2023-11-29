@@ -11,7 +11,9 @@ jobs:
   publish:
     name: "Publish release"
     runs-on: "ubuntu-latest"
-
+    permissions:
+      # this permission is mandatory for trusted publishing
+      id-token: write
     steps:
       - uses: "actions/checkout@v4"
       - uses: "actions/setup-python@v4"
@@ -23,7 +25,4 @@ jobs:
       - name: Build
         run: hatch build
       - name: Publish
-        env:
-          HATCH_INDEX_USER: __token__
-          HATCH_INDEX_AUTH: ${{ secrets.PYPI_TOKEN }}
-        run: hatch publish
+        uses: pypa/gh-action-pypi-publish@release/v1
