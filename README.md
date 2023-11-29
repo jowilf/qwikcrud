@@ -15,7 +15,7 @@ concentrate on the core business logic and functionality.
 > set up a secure and production-ready environment.
 
 
-[![Qwikcrud demo](https://github.com/jowilf/qwikcrud/assets/31705179/fc010d41-597c-4ab7-a0ad-22570ba3b182)](https://vimeo.com/889381304)
+[![Qwikcrud demo](https://github.com/jowilf/qwikcrud/assets/31705179/fc010d41-597c-4ab7-a0ad-22570ba3b182)](https://vimeo.com/889381304 "Qwikcrud demo - A restaurant management app")
 
 ## Table of Contents
 
