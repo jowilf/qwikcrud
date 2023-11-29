@@ -1,0 +1,13 @@
+from typing import Generator, Annotated
+
+from fastapi import Depends
+from app.db import Session
+
+
+
+def get_db() -> Generator:
+    with Session() as session:
+        yield session
+
+
+SessionDep = Annotated[Session, Depends(get_db)]

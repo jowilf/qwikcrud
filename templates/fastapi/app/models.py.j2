@@ -1,0 +1,83 @@
+import datetime
+from pydantic import EmailStr
+from sqlalchemy import MetaData, String, ForeignKey, Column, Table, Enum
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from typing import Optional, List, Union
+from sqlalchemy_file import ImageField, FileField, File
+from sqlalchemy_file.validators import ContentTypeValidator, SizeValidator
+from fastapi import  UploadFile
+{% for entity in app.entities %}
+{%- for field in entity.fields if field.type_ == "Enum" %}
+from app.enums import {{ field.name | title }}
+{% endfor %}
+{% endfor %}
+
+class TimestampMixin:
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        default=datetime.datetime.utcnow
+    )
+    updated_at: Mapped[Optional[datetime.datetime]] = mapped_column(
+        onupdate=datetime.datetime.utcnow
+    )
+
+
+class Base(DeclarativeBase, TimestampMixin):
+    metadata = MetaData(
+        naming_convention={
+            "ix": "ix_%(column_0_label)s",
+            "uq": "uq_%(table_name)s_%(column_0_name)s",
+            "ck": "ck_%(table_name)s_%(constraint_name)s",
+            "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+            "pk": "pk_%(table_name)s",
+        }
+    )
+    type_annotation_map = {EmailStr: String}
+
+{% for r in app.relations if r.type_ == 'MANY_TO_MANY' %}
+{{r.name | lower}} = Table(
+    "{{r.name | lower}}",
+    Base.metadata,
+    Column("{{ r.from_ | lower }}_id", ForeignKey("{{ r.from_ | lower }}.id"), primary_key=True),
+    Column("{{ r.to | lower }}_id", ForeignKey("{{ r.to | lower }}.id"), primary_key=True),
+)
+{% endfor %}
+
+{% for entity in app.entities %}
+
+class {{ entity.name }}(Base):
+    __tablename__ = '{{ entity.name | lower }}'
+
+    {% for field in entity.fields %}
+    {{ field.sqla_column_def() }}
+    {% endfor %}
+
+    {% for r in app.relations if entity.name in [r.to, r.from_] %}
+    {% if r.type_ == 'ONE_TO_MANY'  %}
+        {% if r.from_ == entity.name %}
+    {{r.field_name}}: Mapped[List["{{ r.to }}"]] = relationship(back_populates="{{ r.backref_field_name }}")
+        {% else %}
+    {{r.backref_field_name}}_id: Mapped[Optional[int]] = mapped_column(ForeignKey("{{ r.from_ | lower }}.id"))
+    {{r.backref_field_name}}: Mapped["{{ r.from_ }}"] = relationship(back_populates="{{ r.field_name }}")
+        {% endif %}
+    {% endif %}
+
+    {% if r.type_ == 'ONE_TO_ONE'  %}
+        {% if r.from_ == entity.name %}
+    {{r.field_name}}: Mapped["{{ r.to }}"] = relationship(back_populates="{{ r.backref_field_name }}")
+        {% else %}
+    {{r.backref_field_name}}_id: Mapped[Optional[int]] = mapped_column(ForeignKey("{{ r.from_ | lower }}.id"))
+    {{r.backref_field_name}}: Mapped["{{ r.from_ }}"] = relationship(back_populates="{{ r.field_name }}")
+        {% endif %}
+    {% endif %}
+
+    {% if r.type_ == 'MANY_TO_MANY'  %}
+        {% if r.from_ == entity.name %}
+    {{r.field_name}}: Mapped[List["{{ r.to }}"]] = relationship(secondary="{{r.name | lower}}",back_populates="{{ r.backref_field_name }}")
+        {% else %}
+    {{r.backref_field_name}}: Mapped[List["{{ r.from_ }}"]] = relationship(secondary="{{r.name | lower}}",back_populates="{{ r.field_name }}")
+        {% endif %}
+    {% endif %}
+
+    {% endfor %}
+
+{% endfor %}

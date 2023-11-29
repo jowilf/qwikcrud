@@ -1,0 +1,10 @@
+import os
+
+from app.db import init_db
+from app.storage import init_storage
+
+async def init() -> None:
+    await init_db()
+    {% if app.has_file() %}
+    await init_storage()
+    {% endif %}
