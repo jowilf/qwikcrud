@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 def path_to(relative: str):
-    return Path(__file__).parent.parent / relative
+    return Path(__file__).parent / relative
 
 
 def make_dirs(_dir: Path):

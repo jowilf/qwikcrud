@@ -20,6 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
@@ -97,6 +98,6 @@ known-first-party = ["qwikcrud"]
 [project.scripts]
 qwikcrud = "qwikcrud.cli:main"
 
-[tool.hatch.build.targets.wheel]
+
 [tool.hatch.build.targets.sdist]
-include = ["qwikcrud"]
+exclude = ["/.github"]

@@ -1,6 +1,6 @@
 import datetime
 from pydantic import EmailStr
-from sqlalchemy import MetaData, String, ForeignKey, Column, Table, Enum
+from sqlalchemy import MetaData, String, ForeignKey, Column, Table, Enum, JSON
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from typing import Optional, List, Union
 from sqlalchemy_file import ImageField, FileField, File
@@ -31,7 +31,7 @@ class Base(DeclarativeBase, TimestampMixin):
             "pk": "pk_%(table_name)s",
         }
     )
-    type_annotation_map = {EmailStr: String}
+    type_annotation_map = {EmailStr: String, dict: JSON}
 
 {% for r in app.relations if r.type_ == 'MANY_TO_MANY' %}
 {{r.name | lower}} = Table(

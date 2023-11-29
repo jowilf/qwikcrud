@@ -11,4 +11,4 @@ class DummyAIProvider(AIProvider):
 
     def query(self, prompt: str) -> App:  # noqa ARG002
         time.sleep(0.1)
-        return App.model_validate_json(open(path_to("examples/app.json")).read())
+        return App.model_validate_json(open(path_to("../examples/app.json")).read())
