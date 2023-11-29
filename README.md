@@ -5,7 +5,7 @@
 
 -----
 
-`qwikcrud` is a powerful command-line tool designed to revolutionize your backend development experience by automating the
+`qwikcrud` is a powerful command-line tool designed to enhance your backend development experience by automating the
 generation of comprehensive RESTful APIs and admin interfaces. Say goodbye to the tedious task of
 writing repetitive CRUD (Create, Read, Update, Delete) endpoints when starting a new project, allowing developers to
 concentrate on the core business logic and functionality.
