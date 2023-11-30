@@ -34,18 +34,18 @@ class Base(DeclarativeBase, TimestampMixin):
     type_annotation_map = {EmailStr: String, dict: JSON}
 
 {% for r in app.relations if r.type_ == 'MANY_TO_MANY' %}
-{{r.name | lower}} = Table(
-    "{{r.name | lower}}",
+{{r.name | snake_case}} = Table(
+    "{{r.name | snake_case}}",
     Base.metadata,
-    Column("{{ r.from_ | lower }}_id", ForeignKey("{{ r.from_ | lower }}.id"), primary_key=True),
-    Column("{{ r.to | lower }}_id", ForeignKey("{{ r.to | lower }}.id"), primary_key=True),
+    Column("{{ r.from_ | snake_case }}_id", ForeignKey("{{ r.from_ | snake_case }}.id"), primary_key=True),
+    Column("{{ r.to | snake_case }}_id", ForeignKey("{{ r.to | snake_case }}.id"), primary_key=True),
 )
 {% endfor %}
 
 {% for entity in app.entities %}
 
 class {{ entity.name }}(Base):
-    __tablename__ = '{{ entity.name | lower }}'
+    __tablename__ = '{{ entity.name | snake_case }}'
 
     {% for field in entity.fields %}
     {{ field.sqla_column_def() }}
@@ -56,7 +56,7 @@ class {{ entity.name }}(Base):
         {% if r.from_ == entity.name %}
     {{r.field_name}}: Mapped[List["{{ r.to }}"]] = relationship(back_populates="{{ r.backref_field_name }}")
         {% else %}
-    {{r.backref_field_name}}_id: Mapped[Optional[int]] = mapped_column(ForeignKey("{{ r.from_ | lower }}.id"))
+    {{r.backref_field_name}}_id: Mapped[Optional[int]] = mapped_column(ForeignKey("{{ r.from_ | snake_case }}.id"))
     {{r.backref_field_name}}: Mapped["{{ r.from_ }}"] = relationship(back_populates="{{ r.field_name }}")
         {% endif %}
     {% endif %}
@@ -65,16 +65,16 @@ class {{ entity.name }}(Base):
         {% if r.from_ == entity.name %}
     {{r.field_name}}: Mapped["{{ r.to }}"] = relationship(back_populates="{{ r.backref_field_name }}")
         {% else %}
-    {{r.backref_field_name}}_id: Mapped[Optional[int]] = mapped_column(ForeignKey("{{ r.from_ | lower }}.id"))
+    {{r.backref_field_name}}_id: Mapped[Optional[int]] = mapped_column(ForeignKey("{{ r.from_ | snake_case }}.id"))
     {{r.backref_field_name}}: Mapped["{{ r.from_ }}"] = relationship(back_populates="{{ r.field_name }}")
         {% endif %}
     {% endif %}
 
     {% if r.type_ == 'MANY_TO_MANY'  %}
         {% if r.from_ == entity.name %}
-    {{r.field_name}}: Mapped[List["{{ r.to }}"]] = relationship(secondary="{{r.name | lower}}",back_populates="{{ r.backref_field_name }}")
+    {{r.field_name}}: Mapped[List["{{ r.to }}"]] = relationship(secondary={{r.name | snake_case}},back_populates="{{ r.backref_field_name }}")
         {% else %}
-    {{r.backref_field_name}}: Mapped[List["{{ r.from_ }}"]] = relationship(secondary="{{r.name | lower}}",back_populates="{{ r.field_name }}")
+    {{r.backref_field_name}}: Mapped[List["{{ r.from_ }}"]] = relationship(secondary={{r.name | snake_case}},back_populates="{{ r.field_name }}")
         {% endif %}
     {% endif %}
 

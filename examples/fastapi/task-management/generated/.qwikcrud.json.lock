@@ -57,7 +57,7 @@
                     }
                 },
                 {
-                    "name": "firstname",
+                    "name": "first_name",
                     "type_": "String",
                     "constraints": {
                         "unique": null,
@@ -74,7 +74,7 @@
                     }
                 },
                 {
-                    "name": "lastname",
+                    "name": "last_name",
                     "type_": "String",
                     "constraints": {
                         "unique": null,
@@ -220,7 +220,7 @@
                     }
                 },
                 {
-                    "name": "startdate",
+                    "name": "start_date",
                     "type_": "Date",
                     "constraints": {
                         "unique": null,
@@ -237,7 +237,7 @@
                     }
                 },
                 {
-                    "name": "duedate",
+                    "name": "due_date",
                     "type_": "Date",
                     "constraints": {
                         "unique": null,
@@ -275,7 +275,7 @@
                     }
                 },
                 {
-                    "name": "instructions",
+                    "name": "instruction_file",
                     "type_": "File",
                     "constraints": {
                         "unique": null,
@@ -289,6 +289,7 @@
                         "max_length": null,
                         "mime_types": [
                             "application/pdf",
+                            "application/msword",
                             "text/plain"
                         ],
                         "allowed_values": null
@@ -299,7 +300,7 @@
     ],
     "relations": [
         {
-            "name": "user_projects",
+            "name": "User_Projects",
             "type_": "ONE_TO_MANY",
             "from_": "User",
             "to": "Project",
@@ -307,7 +308,7 @@
             "backref_field_name": "user"
         },
         {
-            "name": "project_tasks",
+            "name": "Project_Tasks",
             "type_": "ONE_TO_MANY",
             "from_": "Project",
             "to": "Task",
@@ -315,7 +316,7 @@
             "backref_field_name": "project"
         },
         {
-            "name": "task_assignee",
+            "name": "Task_Assignee",
             "type_": "ONE_TO_ONE",
             "from_": "Task",
             "to": "User",
