@@ -1,0 +1,326 @@
+{
+    "name": "Task Management",
+    "description": "An application for managing tasks with deadlines and assignees.",
+    "entities": [
+        {
+            "name": "User",
+            "fields": [
+                {
+                    "name": "id",
+                    "type_": "ID",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": null,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                },
+                {
+                    "name": "email",
+                    "type_": "Email",
+                    "constraints": {
+                        "unique": true,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": 100,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                },
+                {
+                    "name": "password",
+                    "type_": "String",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": 8,
+                        "max_length": 100,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                },
+                {
+                    "name": "firstname",
+                    "type_": "String",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": 50,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                },
+                {
+                    "name": "lastname",
+                    "type_": "String",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": 50,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                },
+                {
+                    "name": "avatar",
+                    "type_": "Image",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": null,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                },
+                {
+                    "name": "bio",
+                    "type_": "Text",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": null,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Project",
+            "fields": [
+                {
+                    "name": "id",
+                    "type_": "ID",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": null,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                },
+                {
+                    "name": "title",
+                    "type_": "String",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": 100,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                },
+                {
+                    "name": "description",
+                    "type_": "Text",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": null,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Task",
+            "fields": [
+                {
+                    "name": "id",
+                    "type_": "ID",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": null,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                },
+                {
+                    "name": "name",
+                    "type_": "String",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": 500,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                },
+                {
+                    "name": "startdate",
+                    "type_": "Date",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": null,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                },
+                {
+                    "name": "duedate",
+                    "type_": "Date",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": null,
+                        "mime_types": null,
+                        "allowed_values": null
+                    }
+                },
+                {
+                    "name": "status",
+                    "type_": "Enum",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": null,
+                        "mime_types": null,
+                        "allowed_values": [
+                            "OPEN",
+                            "IN_PROGRESS",
+                            "COMPLETED"
+                        ]
+                    }
+                },
+                {
+                    "name": "instructions",
+                    "type_": "File",
+                    "constraints": {
+                        "unique": null,
+                        "not_null": null,
+                        "gt": null,
+                        "ge": null,
+                        "lt": null,
+                        "le": null,
+                        "multiple_of": null,
+                        "min_length": null,
+                        "max_length": null,
+                        "mime_types": [
+                            "application/pdf",
+                            "text/plain"
+                        ],
+                        "allowed_values": null
+                    }
+                }
+            ]
+        }
+    ],
+    "relations": [
+        {
+            "name": "user_projects",
+            "type_": "ONE_TO_MANY",
+            "from_": "User",
+            "to": "Project",
+            "field_name": "projects",
+            "backref_field_name": "user"
+        },
+        {
+            "name": "project_tasks",
+            "type_": "ONE_TO_MANY",
+            "from_": "Project",
+            "to": "Task",
+            "field_name": "tasks",
+            "backref_field_name": "project"
+        },
+        {
+            "name": "task_assignee",
+            "type_": "ONE_TO_ONE",
+            "from_": "Task",
+            "to": "User",
+            "field_name": "assignee",
+            "backref_field_name": "task"
+        }
+    ]
+}
