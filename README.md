@@ -1,6 +1,6 @@
 # qwikcrud
 
-[![PyPI - Version](https://img.shields.io/pypi/v/qwikcrud.svg)](https://pypi.org/project/`qwikcrud`)
+[![PyPI - Version](https://img.shields.io/pypi/v/qwikcrud.svg)](https://pypi.org/project/qwikcrud)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/qwikcrud.svg)](https://pypi.org/project/qwikcrud)
 
 -----
@@ -62,6 +62,11 @@ qwikcrud -o output_dir
 - [Starlette-admin](https://github.com/jowilf/starlette-admin)
 - [SQLAlchemy-file](https://github.com/jowilf/sqlalchemy-file)
 
+### Examples
+
+- Task
+  Management ([prompt](./examples/fastapi/task-management/prompt), [generated app](./examples/fastapi/task-management/generated))
+
 ## Roadmap
 
 `qwikcrud` is designed to support various stacks and AI providers. Here's an overview of what has been accomplished and
@@ -69,8 +74,8 @@ what is planned for the future:
 
 - [x] FastAPI + SQLAlchemy
     - [x] CRUD Endpoints
-    - [x] Admin interface with Starlette-admin
-    - [x] File Management with SQLAlchemy-file
+    - [x] Admin interfaces with Starlette-admin
+    - [x] Files Management with SQLAlchemy-file
     - [ ] Authentication
 - [ ] FastAPI + Beanie
 - [ ] SpringBoot
