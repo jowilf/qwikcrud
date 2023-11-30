@@ -69,22 +69,28 @@ qwikcrud -o output_dir
 
 ## Roadmap
 
-`qwikcrud` is designed to support various stacks and AI providers. Here's an overview of what has been accomplished and
+`qwikcrud` is designed to support various frameworks and AI providers. Here's an overview of what has been accomplished and
 what is planned for the future:
 
+### Frameworks
+
 - [x] FastAPI + SQLAlchemy
-    - [x] CRUD Endpoints
-    - [x] Admin interfaces with Starlette-admin
-    - [x] Files Management with SQLAlchemy-file
+    - [x] Restful APIs
+    - [x] Admin interfaces
     - [ ] Authentication
 - [ ] FastAPI + Beanie
-- [ ] SpringBoot
-- [ ] Local LLMs support.
+- [ ] Spring Boot
+
+### AI providers
+
+- [x] OpenAI
+- [ ] Anthropic
+- [ ] Ollama (self-hosted LLMs)
 
 ## Pricing
 
-`qwikcrud` makes one API call per prompt. Please note that `qwikcrud` will add a system prompt of around 900 tokens to
-your prompt. For example, with the GPT-3.5-turbo-1106 model, it will cost around $0.003 to generate your application.
+`qwikcrud` makes one API call per prompt and add a system prompt of around 900 tokens to
+your prompt. For example, with the OpenAI GPT-3.5-turbo-1106 model, it will cost around $0.003 to generate your application.
 The cost may vary depending on the output length.
 
 ## Contributing
