@@ -38,8 +38,8 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[EmailStr] = mapped_column(unique=True)
     password: Mapped[str]
-    firstname: Mapped[str]
-    lastname: Mapped[str]
+    first_name: Mapped[str]
+    last_name: Mapped[str]
     avatar: Mapped[Union[File, UploadFile, None]] = mapped_column(
         ImageField(
             thumbnail_size=(150, 150), validators=[SizeValidator(max_size="20M")]
@@ -71,14 +71,16 @@ class Task(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
-    startdate: Mapped[datetime.date]
-    duedate: Mapped[datetime.date]
+    start_date: Mapped[datetime.date]
+    due_date: Mapped[datetime.date]
     status: Mapped[str] = mapped_column(Enum(Status))
-    instructions: Mapped[Union[File, UploadFile, None]] = mapped_column(
+    instruction_file: Mapped[Union[File, UploadFile, None]] = mapped_column(
         FileField(
             validators=[
                 SizeValidator(max_size="20M"),
-                ContentTypeValidator(["application/pdf", "text/plain"]),
+                ContentTypeValidator(
+                    ["application/pdf", "application/msword", "text/plain"]
+                ),
             ]
         )
     )

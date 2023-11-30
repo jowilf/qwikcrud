@@ -46,17 +46,17 @@ async def delete(*, db: SessionDep, id: int) -> None:
 # Handle files
 
 
-@router.put("/{id}/instructions")
-async def set_instructions(*, db: SessionDep, id: int, file: UploadFile) -> TaskOut:
+@router.put("/{id}/instruction_file")
+async def set_instruction_file(*, db: SessionDep, id: int, file: UploadFile) -> TaskOut:
     task = await crud.task.getOr404(db, id)
-    task.instructions = file
+    task.instruction_file = file
     return await crud.task.save(db, db_obj=task)
 
 
-@router.delete("/{id}/instructions", status_code=204)
-async def remove_instructions(*, db: SessionDep, id: int) -> None:
+@router.delete("/{id}/instruction_file", status_code=204)
+async def remove_instruction_file(*, db: SessionDep, id: int) -> None:
     task = await crud.task.getOr404(db, id)
-    task.instructions = None
+    task.instruction_file = None
     await crud.task.save(db, db_obj=task)
 
 

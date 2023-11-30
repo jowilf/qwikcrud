@@ -1,6 +1,6 @@
 {# This template generates FastAPI router code for CRUD operations on entities and their relationships. #}
 {% set e = entity %}
-{% set name_lower = e.name | lower %}
+{% set name_lower = e.name | snake_case %}
 from app import crud
 from fastapi import APIRouter, HTTPException, UploadFile
 
@@ -12,7 +12,7 @@ from app.models import {{ entity.name }}
 from app.schemas import {{ entity.name }}Out
 {% endfor %}
 
-router = APIRouter(tags=["{{ e.name |lower }}s"])
+router = APIRouter(tags=["{{ name_lower }}s"])
 
 
 @router.get("/")

@@ -93,7 +93,7 @@ class FieldModel(BaseModel):
 
     @model_validator(mode="after")
     def root_validator(self) -> "FieldModel":
-        self.name = self.name.lower()
+        self.name = h.lower_first_character(self.name)
         return self
 
     def is_id(self):
@@ -138,7 +138,7 @@ class FieldModel(BaseModel):
             mapped_column_kwargs.append("unique=True")
         if self.type_ == FieldType.ID:
             mapped_column_kwargs.append("primary_key=True")
-        return f"{self.name}: Mapped[{type_mapping}]" + (
+        return f"{h.snake_case(self.name)}: Mapped[{type_mapping}]" + (
             f'=mapped_column({",".join(mapped_column_kwargs)})'
             if len(mapped_column_kwargs) > 0
             else ""
@@ -161,7 +161,7 @@ class FieldModel(BaseModel):
         if all_optional:
             pydantic_field_kwargs = ["None", *pydantic_field_kwargs]
 
-        return f"{self.name}: {type_mapping}" + (
+        return f"{h.snake_case(self.name)}: {type_mapping}" + (
             f'=Field({",".join(pydantic_field_kwargs)})'
             if len(pydantic_field_kwargs) > 0
             else ""
@@ -174,7 +174,7 @@ class Entity(BaseModel):
 
     @model_validator(mode="after")
     def root_validator(self) -> "Entity":
-        self.name = self.name.capitalize()
+        self.name = h.upper_first_character(self.name)
         return self
 
 
@@ -188,9 +188,9 @@ class Relation(BaseModel):
 
     @model_validator(mode="after")
     def root_validator_mode_after(self) -> "Relation":
-        self.name = self.name.lower()
-        self.from_ = self.from_.capitalize()
-        self.to = self.to.capitalize()
+        self.name = h.upper_first_character(self.name)
+        self.from_ = h.upper_first_character(self.from_)
+        self.to = h.upper_first_character(self.to)
         self.field_name = h.lower_first_character(self.field_name)
         self.backref_field_name = h.lower_first_character(self.backref_field_name)
         return self

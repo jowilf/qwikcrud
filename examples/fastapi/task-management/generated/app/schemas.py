@@ -22,8 +22,8 @@ class FileInfo(BaseModel):
 class UserCreate(BaseModel):
     email: EmailStr = Field(max_length=100)
     password: str = Field(min_length=8, max_length=100)
-    firstname: str = Field(max_length=50)
-    lastname: str = Field(max_length=50)
+    first_name: str = Field(max_length=50)
+    last_name: str = Field(max_length=50)
     bio: str
 
 
@@ -34,8 +34,8 @@ class UserUpdate(UserCreate):
 class UserPatch(BaseModel):
     email: Optional[EmailStr] = Field(None, max_length=100)
     password: Optional[str] = Field(None, min_length=8, max_length=100)
-    firstname: Optional[str] = Field(None, max_length=50)
-    lastname: Optional[str] = Field(None, max_length=50)
+    first_name: Optional[str] = Field(None, max_length=50)
+    last_name: Optional[str] = Field(None, max_length=50)
     bio: Optional[str] = Field(None)
 
 
@@ -43,8 +43,8 @@ class UserOut(BaseModel):
     id: int
     email: EmailStr = Field(max_length=100)
     password: str = Field(min_length=8, max_length=100)
-    firstname: str = Field(max_length=50)
-    lastname: str = Field(max_length=50)
+    first_name: str = Field(max_length=50)
+    last_name: str = Field(max_length=50)
     avatar: Optional[FileInfo]
     bio: str
 
@@ -77,8 +77,8 @@ class ProjectOut(BaseModel):
 
 class TaskCreate(BaseModel):
     name: str = Field(max_length=500)
-    startdate: datetime.date
-    duedate: datetime.date
+    start_date: datetime.date
+    due_date: datetime.date
     status: Status
 
 
@@ -88,17 +88,17 @@ class TaskUpdate(TaskCreate):
 
 class TaskPatch(BaseModel):
     name: Optional[str] = Field(None, max_length=500)
-    startdate: Optional[datetime.date] = Field(None)
-    duedate: Optional[datetime.date] = Field(None)
+    start_date: Optional[datetime.date] = Field(None)
+    due_date: Optional[datetime.date] = Field(None)
     status: Optional[Status] = Field(None)
 
 
 class TaskOut(BaseModel):
     id: int
     name: str = Field(max_length=500)
-    startdate: datetime.date
-    duedate: datetime.date
+    start_date: datetime.date
+    due_date: datetime.date
     status: Status
-    instructions: Optional[FileInfo] = Field(
-        mime_types=["application/pdf", "text/plain"]
+    instruction_file: Optional[FileInfo] = Field(
+        mime_types=["application/pdf", "application/msword", "text/plain"]
     )

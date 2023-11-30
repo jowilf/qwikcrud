@@ -17,6 +17,7 @@ class BaseAppGenerator:
             trim_blocks=True,
             lstrip_blocks=True,
         )
+        self.env.filters["snake_case"] = h.snake_case
         self.output_directory = output_directory
 
     def _write_code_into_file(self, path, code_text: str, format_code: bool = True):
@@ -76,6 +77,7 @@ class FastAPIAppGenerator(BaseAppGenerator):
         return f"fastapi/{relative_path}"
 
     def generate(self, app: App) -> None:
+        h.apply_python_naming_convention(app)
         h.make_dirs(self.output_directory / "app")
         h.make_dirs(self.output_directory / "templates")
         h.make_dirs(self.output_directory / "static/css")

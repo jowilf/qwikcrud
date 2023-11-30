@@ -68,6 +68,6 @@ class CRUD{{ e }}(CRUDBase[{{ e }}, {{ e }}Create, {{ e }}Update]):
 {% endfor %}
 
 {% for entity in app.entities %}
-{{entity.name | lower}} = CRUD{{entity.name }}({{entity.name}})
+{{entity.name | snake_case }} = CRUD{{entity.name }}({{entity.name}})
 {% endfor %}
 
