@@ -1,0 +1,10 @@
+fastapi>=0.104.1
+starlette-admin>=0.12
+pydantic[email]>=2
+pydantic_settings
+sqlalchemy>=2
+sqlalchemy-file==0.6.0
+fasteners==0.19
+pillow>=10.1
+python-multipart==0.0.6
+uvicorn>=0.24.0.post1
