@@ -54,13 +54,13 @@ dependencies = [
 [tool.hatch.envs.default.scripts]
 cli = "python -m qwikcrud.cli {args}"
 format = [
-    "black {args:qwikcrud}",
-    "ruff --fix {args:qwikcrud}",
+    "black {args:qwikcrud tests}",
+    "ruff --fix {args:qwikcrud tests}",
 ]
 test = "pytest {args:tests}"
 lint = [
-    "ruff {args:qwikcrud}",
-    "black --check {args:qwikcrud}"
+    "ruff {args:qwikcrud tests}",
+    "black --check {args:qwikcrud tests}"
 ]
 
 [tool.ruff]
