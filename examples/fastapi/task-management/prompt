@@ -1,4 +1,4 @@
-A Task management app where multiple users can collaborate on a single project that has multiple tasks.
-Each task is assigned to one user with a start date and a due date.
-A task has a status that can be open, in progress, or completed.
-A task can have an instruction file attached to it, which can be a PDF, a word document or a text file.
+An application for managing tasks that enables multiple users to collaborate on a single project with multiple tasks.
+The user creates a project, and each task can be assigned to multiple users, while a user can also work on multiple tasks.
+Each task has a start date and a due date, with a status that can be open, in progress, or completed.
+Additionally, each task can have an instruction file attached to it, which can be a PDF, a Word document, or a text file.

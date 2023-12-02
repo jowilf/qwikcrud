@@ -1,6 +1,6 @@
-#   Task Management
+#   TaskManager
 
-An application for managing tasks with deadlines and assignees.
+An application for managing tasks that enables multiple users to collaborate on a single project with multiple tasks.
 
 Follow these steps to run the application:
 

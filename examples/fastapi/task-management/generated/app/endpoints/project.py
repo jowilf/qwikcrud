@@ -16,7 +16,7 @@ async def read_all(db: SessionDep, skip: int = 0, limit: int = 100) -> list[Proj
 
 @router.get("/{id}")
 async def read_one(db: SessionDep, id: int) -> ProjectOut:
-    project = await crud.project.getOr404(db, id)
+    project = await crud.project.get_or_404(db, id)
     return project
 
 
@@ -27,19 +27,19 @@ async def create(*, db: SessionDep, project_in: ProjectCreate) -> ProjectOut:
 
 @router.put("/{id}")
 async def update(*, db: SessionDep, id: int, project_in: ProjectUpdate) -> ProjectOut:
-    project = await crud.project.getOr404(db, id)
+    project = await crud.project.get_or_404(db, id)
     return await crud.project.update(db, db_obj=project, obj_in=project_in)
 
 
 @router.patch("/{id}")
 async def patch(*, db: SessionDep, id: int, project_in: ProjectPatch) -> ProjectOut:
-    project = await crud.project.getOr404(db, id)
+    project = await crud.project.get_or_404(db, id)
     return await crud.project.update(db, db_obj=project, obj_in=project_in)
 
 
 @router.delete("/{id}", status_code=204)
 async def delete(*, db: SessionDep, id: int) -> None:
-    project = await crud.project.getOr404(db, id)
+    project = await crud.project.get_or_404(db, id)
     return await crud.project.delete(db, db_obj=project)
 
 
@@ -48,28 +48,28 @@ async def delete(*, db: SessionDep, id: int) -> None:
 
 @router.get("/{id}/user")
 async def get_associated_user(db: SessionDep, id: int) -> Optional[UserOut]:
-    project = await crud.project.getOr404(db, id)
+    project = await crud.project.get_or_404(db, id)
     return project.user
 
 
 @router.put("/{id}/user/{user_id}")
 async def set_user_by_id(db: SessionDep, id: int, user_id: int) -> Optional[UserOut]:
-    project = await crud.project.getOr404(db, id)
-    project.user = await crud.user.getOr404(db, user_id)
+    project = await crud.project.get_or_404(db, id)
+    project.user = await crud.user.get_or_404(db, user_id)
     project = await crud.project.save(db, project)
     return project.user
 
 
 @router.get("/{id}/tasks")
 async def get_associated_tasks(db: SessionDep, id: int) -> List[TaskOut]:
-    project = await crud.project.getOr404(db, id)
+    project = await crud.project.get_or_404(db, id)
     return project.tasks
 
 
 @router.put("/{id}/tasks")
 async def add_tasks_by_ids(db: SessionDep, id: int, ids: List[int]) -> List[TaskOut]:
-    project = await crud.project.getOr404(db, id)
+    project = await crud.project.get_or_404(db, id)
     for _id in ids:
-        project.tasks.append(await crud.task.getOr404(db, _id))
+        project.tasks.append(await crud.task.get_or_404(db, _id))
     project = await crud.project.save(db, project)
     return project.tasks

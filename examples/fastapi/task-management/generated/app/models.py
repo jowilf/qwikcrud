@@ -4,7 +4,7 @@ from typing import List, Optional, Union
 from app.enums import Status
 from fastapi import UploadFile
 from pydantic import EmailStr
-from sqlalchemy import JSON, Enum, ForeignKey, MetaData, String
+from sqlalchemy import JSON, Column, Enum, ForeignKey, MetaData, String, Table
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from sqlalchemy_file import File, FileField, ImageField
 from sqlalchemy_file.validators import ContentTypeValidator, SizeValidator
@@ -32,10 +32,19 @@ class Base(DeclarativeBase, TimestampMixin):
     type_annotation_map = {EmailStr: String, dict: JSON}
 
 
+task__users = Table(
+    "task__users",
+    Base.metadata,
+    Column("task_id", ForeignKey("task.id"), primary_key=True),
+    Column("user_id", ForeignKey("user.id"), primary_key=True),
+)
+
+
 class User(Base):
     __tablename__ = "user"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(unique=True)
     email: Mapped[EmailStr] = mapped_column(unique=True)
     password: Mapped[str]
     first_name: Mapped[str]
@@ -49,16 +58,19 @@ class User(Base):
 
     projects: Mapped[List["Project"]] = relationship(back_populates="user")
 
-    task_id: Mapped[Optional[int]] = mapped_column(ForeignKey("task.id"))
-    task: Mapped["Task"] = relationship(back_populates="assignee")
+    tasks: Mapped[List["Task"]] = relationship(
+        secondary=task__users, back_populates="assigned_users"
+    )
 
 
 class Project(Base):
     __tablename__ = "project"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[str]
+    name: Mapped[str]
     description: Mapped[str]
+    start_date: Mapped[datetime.date]
+    due_date: Mapped[datetime.date]
 
     user_id: Mapped[Optional[int]] = mapped_column(ForeignKey("user.id"))
     user: Mapped["User"] = relationship(back_populates="projects")
@@ -71,6 +83,7 @@ class Task(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
+    description: Mapped[str]
     start_date: Mapped[datetime.date]
     due_date: Mapped[datetime.date]
     status: Mapped[str] = mapped_column(Enum(Status))
@@ -88,4 +101,6 @@ class Task(Base):
     project_id: Mapped[Optional[int]] = mapped_column(ForeignKey("project.id"))
     project: Mapped["Project"] = relationship(back_populates="tasks")
 
-    assignee: Mapped["User"] = relationship(back_populates="task")
+    assigned_users: Mapped[List["User"]] = relationship(
+        secondary=task__users, back_populates="tasks"
+    )

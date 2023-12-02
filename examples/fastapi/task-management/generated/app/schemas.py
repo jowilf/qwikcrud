@@ -20,6 +20,7 @@ class FileInfo(BaseModel):
 
 
 class UserCreate(BaseModel):
+    username: str = Field(max_length=50)
     email: EmailStr = Field(max_length=100)
     password: str = Field(min_length=8, max_length=100)
     first_name: str = Field(max_length=50)
@@ -32,6 +33,7 @@ class UserUpdate(UserCreate):
 
 
 class UserPatch(BaseModel):
+    username: Optional[str] = Field(None, max_length=50)
     email: Optional[EmailStr] = Field(None, max_length=100)
     password: Optional[str] = Field(None, min_length=8, max_length=100)
     first_name: Optional[str] = Field(None, max_length=50)
@@ -41,6 +43,7 @@ class UserPatch(BaseModel):
 
 class UserOut(BaseModel):
     id: int
+    username: str = Field(max_length=50)
     email: EmailStr = Field(max_length=100)
     password: str = Field(min_length=8, max_length=100)
     first_name: str = Field(max_length=50)
@@ -53,8 +56,10 @@ class UserOut(BaseModel):
 
 
 class ProjectCreate(BaseModel):
-    title: str = Field(max_length=100)
+    name: str = Field(max_length=100)
     description: str
+    start_date: datetime.date
+    due_date: datetime.date
 
 
 class ProjectUpdate(ProjectCreate):
@@ -62,21 +67,26 @@ class ProjectUpdate(ProjectCreate):
 
 
 class ProjectPatch(BaseModel):
-    title: Optional[str] = Field(None, max_length=100)
+    name: Optional[str] = Field(None, max_length=100)
     description: Optional[str] = Field(None)
+    start_date: Optional[datetime.date] = Field(None)
+    due_date: Optional[datetime.date] = Field(None)
 
 
 class ProjectOut(BaseModel):
     id: int
-    title: str = Field(max_length=100)
+    name: str = Field(max_length=100)
     description: str
+    start_date: datetime.date
+    due_date: datetime.date
 
 
 # -------------- Task ------------------
 
 
 class TaskCreate(BaseModel):
-    name: str = Field(max_length=500)
+    name: str = Field(max_length=100)
+    description: str
     start_date: datetime.date
     due_date: datetime.date
     status: Status
@@ -87,7 +97,8 @@ class TaskUpdate(TaskCreate):
 
 
 class TaskPatch(BaseModel):
-    name: Optional[str] = Field(None, max_length=500)
+    name: Optional[str] = Field(None, max_length=100)
+    description: Optional[str] = Field(None)
     start_date: Optional[datetime.date] = Field(None)
     due_date: Optional[datetime.date] = Field(None)
     status: Optional[Status] = Field(None)
@@ -95,7 +106,8 @@ class TaskPatch(BaseModel):
 
 class TaskOut(BaseModel):
     id: int
-    name: str = Field(max_length=500)
+    name: str = Field(max_length=100)
+    description: str
     start_date: datetime.date
     due_date: datetime.date
     status: Status

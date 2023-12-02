@@ -20,7 +20,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     async def get(self, db: Session, id: Any) -> Optional[ModelType]:
         return db.get(self.model, id)
 
-    async def getOr404(self, db: Session, id: Any) -> Optional[ModelType]:
+    async def get_or_404(self, db: Session, id: Any) -> Optional[ModelType]:
         obj = await self.get(db, id)
         if obj is None:
             raise HTTPException(

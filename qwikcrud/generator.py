@@ -105,7 +105,9 @@ class FastAPIAppGenerator(BaseAppGenerator):
         if app.has_enum():
             self._generate_from_template(app, "app/enums")
         self._write_code_into_file(
-            ".qwikcrud.json.lock", app.model_dump_json(indent=4), format_code=False
+            ".qwikcrud.json.lock",
+            app.model_dump_json(indent=4, exclude_unset=True, by_alias=True),
+            format_code=False,
         )
 
     def __generate_endpoints(self, app: App) -> None:

@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from app import crud
 from app.deps import SessionDep
@@ -16,7 +16,7 @@ async def read_all(db: SessionDep, skip: int = 0, limit: int = 100) -> list[Task
 
 @router.get("/{id}")
 async def read_one(db: SessionDep, id: int) -> TaskOut:
-    task = await crud.task.getOr404(db, id)
+    task = await crud.task.get_or_404(db, id)
     return task
 
 
@@ -27,19 +27,19 @@ async def create(*, db: SessionDep, task_in: TaskCreate) -> TaskOut:
 
 @router.put("/{id}")
 async def update(*, db: SessionDep, id: int, task_in: TaskUpdate) -> TaskOut:
-    task = await crud.task.getOr404(db, id)
+    task = await crud.task.get_or_404(db, id)
     return await crud.task.update(db, db_obj=task, obj_in=task_in)
 
 
 @router.patch("/{id}")
 async def patch(*, db: SessionDep, id: int, task_in: TaskPatch) -> TaskOut:
-    task = await crud.task.getOr404(db, id)
+    task = await crud.task.get_or_404(db, id)
     return await crud.task.update(db, db_obj=task, obj_in=task_in)
 
 
 @router.delete("/{id}", status_code=204)
 async def delete(*, db: SessionDep, id: int) -> None:
-    task = await crud.task.getOr404(db, id)
+    task = await crud.task.get_or_404(db, id)
     return await crud.task.delete(db, db_obj=task)
 
 
@@ -48,14 +48,14 @@ async def delete(*, db: SessionDep, id: int) -> None:
 
 @router.put("/{id}/instruction_file")
 async def set_instruction_file(*, db: SessionDep, id: int, file: UploadFile) -> TaskOut:
-    task = await crud.task.getOr404(db, id)
+    task = await crud.task.get_or_404(db, id)
     task.instruction_file = file
     return await crud.task.save(db, db_obj=task)
 
 
 @router.delete("/{id}/instruction_file", status_code=204)
 async def remove_instruction_file(*, db: SessionDep, id: int) -> None:
-    task = await crud.task.getOr404(db, id)
+    task = await crud.task.get_or_404(db, id)
     task.instruction_file = None
     await crud.task.save(db, db_obj=task)
 
@@ -65,7 +65,7 @@ async def remove_instruction_file(*, db: SessionDep, id: int) -> None:
 
 @router.get("/{id}/project")
 async def get_associated_project(db: SessionDep, id: int) -> Optional[ProjectOut]:
-    task = await crud.task.getOr404(db, id)
+    task = await crud.task.get_or_404(db, id)
     return task.project
 
 
@@ -73,23 +73,24 @@ async def get_associated_project(db: SessionDep, id: int) -> Optional[ProjectOut
 async def set_project_by_id(
     db: SessionDep, id: int, project_id: int
 ) -> Optional[ProjectOut]:
-    task = await crud.task.getOr404(db, id)
-    task.project = await crud.project.getOr404(db, project_id)
+    task = await crud.task.get_or_404(db, id)
+    task.project = await crud.project.get_or_404(db, project_id)
     task = await crud.task.save(db, task)
     return task.project
 
 
-@router.get("/{id}/assignee")
-async def get_associated_assignee(db: SessionDep, id: int) -> Optional[UserOut]:
-    task = await crud.task.getOr404(db, id)
-    return task.assignee
+@router.get("/{id}/assigned_users")
+async def get_associated_assigned_users(db: SessionDep, id: int) -> List[UserOut]:
+    task = await crud.task.get_or_404(db, id)
+    return task.assigned_users
 
 
-@router.put("/{id}/assignee/{assignee_id}")
-async def set_assignee_by_id(
-    db: SessionDep, id: int, assignee_id: int
-) -> Optional[UserOut]:
-    task = await crud.task.getOr404(db, id)
-    task.assignee = await crud.user.getOr404(db, assignee_id)
+@router.put("/{id}/assigned_users")
+async def add_assigned_users_by_ids(
+    db: SessionDep, id: int, ids: List[int]
+) -> List[UserOut]:
+    task = await crud.task.get_or_404(db, id)
+    for _id in ids:
+        task.assigned_users.append(await crud.user.get_or_404(db, _id))
     task = await crud.task.save(db, task)
-    return task.assignee
+    return task.assigned_users

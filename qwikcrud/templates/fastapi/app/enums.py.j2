@@ -6,7 +6,7 @@ import enum
 
 class {{ field.name | title }}(str, enum.Enum):
     {% for v in field.constraints.get_allowed_values() %}
-    {{ v | upper }} = "{{ v }}"
+    {{ v | upper | replace(' ', '_')  }} = "{{ v }}"
     {% endfor %}
 {% endfor %}
 {% endfor %}

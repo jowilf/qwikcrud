@@ -1,6 +1,6 @@
 {
-    "name": "Task Manager",
-    "description": "An application for managing tasks with deadlines and assignees.",
+    "name": "The app name",
+    "description": "A description of the app",
     "entities": [
         {
             "name": "User",
@@ -10,11 +10,19 @@
                     "type": "ID"
                 },
                 {
+                    "name": "username",
+                    "type": "String",
+                    "constraints": {
+                        "unique": true,
+                        "max_length": 50
+                    }
+                },
+                {
                     "name": "email",
                     "type": "Email",
                     "constraints": {
-                        "max_length": 100,
-                        "unique": true
+                        "unique": true,
+                        "max_length": 100
                     }
                 },
                 {
@@ -26,14 +34,14 @@
                     }
                 },
                 {
-                    "name": "firstName",
+                    "name": "first_name",
                     "type": "String",
                     "constraints": {
                         "max_length": 50
                     }
                 },
                 {
-                    "name": "lastName",
+                    "name": "last_name",
                     "type": "String",
                     "constraints": {
                         "max_length": 50
@@ -50,14 +58,44 @@
             ]
         },
         {
-            "name": "TaskList",
+            "name": "Address",
             "fields": [
                 {
                     "name": "id",
                     "type": "ID"
                 },
                 {
-                    "name": "title",
+                    "name": "street",
+                    "type": "String",
+                    "constraints": {
+                        "max_length": 100
+                    }
+                },
+                {
+                    "name": "city",
+                    "type": "String",
+                    "constraints": {
+                        "max_length": 50
+                    }
+                },
+                {
+                    "name": "zip_code",
+                    "type": "String",
+                    "constraints": {
+                        "max_length": 20
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Product",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "ID"
+                },
+                {
+                    "name": "name",
                     "type": "String",
                     "constraints": {
                         "max_length": 100
@@ -66,75 +104,73 @@
                 {
                     "name": "description",
                     "type": "Text"
+                },
+                {
+                    "name": "price",
+                    "type": "Float",
+                    "constraints": {
+                        "ge": 0.0
+                    }
+                },
+                {
+                    "name": "in_stock",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "image",
+                    "type": "Image"
                 }
             ]
         },
         {
-            "name": "Task",
+            "name": "Order",
             "fields": [
                 {
                     "name": "id",
                     "type": "ID"
                 },
                 {
-                    "name": "name",
-                    "type": "StRing",
+                    "name": "order_date",
+                    "type": "Date"
+                },
+                {
+                    "name": "total_amount",
+                    "type": "Float",
                     "constraints": {
-                        "max_length": 500
+                        "ge": 0.0
                     }
                 },
                 {
-                    "name": "dueDate",
-                    "type": "DateTime"
-                },
-                {
-                    "name": "status",
-                    "type": "Enum",
-                    "constraints": {
-                        "allowed_values": [
-                            "PENDING",
-                            "IN_PROGRESS",
-                            "COMPLETED"
-                        ]
-                    }
-                },
-                {
-                    "name": "instructions",
-                    "type": "File",
-                    "constraints": {
-                        "mime_types": [
-                            "application/pdf",
-                            "application/text"
-                        ]
-                    }
+                    "name": "is_paid",
+                    "type": "Boolean"
                 }
             ]
         }
     ],
     "relations": [
         {
-            "name": "User_TaskLists",
-            "type": "ONE_TO_MANY",
+            "name": "User_Address",
+            "type": "ONE_TO_ONE",
             "from": "User",
-            "to": "TaskList",
-            "field_name": "taskLists",
+            "to": "Address",
+            "field_name": "address",
             "backref_field_name": "user"
         },
         {
-            "name": "Tasks_TaskList",
-            "type": "MANY_TO_ONE",
-            "from": "Task",
-            "to": "TaskList",
-            "field_name": "taskList",
-            "backref_field_name": "tasks"
+            "name": "User_Products",
+            "type": "ONE_TO_MANY",
+            "from": "User",
+            "to": "Product",
+            "field_name": "products",
+            "backref_field_name": "user"
         },
         {
-            "name": "Task_Assignees",
-            "type": "many_TO_MANY",
-            "from": "Task",
-            "to": "User",
-            "field_name": "assignees",
-            "backref_field_name": "tasks"
+            "name": "Product_Orders",
+            "type": "MANY_TO_MANY",
+            "from": "Product",
+            "to": "Order",
+            "field_name": "orders",
+            "backref_field_name": "products"
         }
     ]
 }
