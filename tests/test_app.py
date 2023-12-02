@@ -4,4 +4,5 @@ from qwikcrud.schemas import App
 
 
 def test_validate():
-    App.model_validate_json(open(Path(__file__).parent / "dummy.json").read())
+    with open(Path(__file__).parent / "dummy.json") as f:
+        App.model_validate_json(f.read())

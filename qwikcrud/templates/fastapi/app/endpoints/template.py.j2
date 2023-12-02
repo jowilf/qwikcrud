@@ -24,7 +24,7 @@ async def read_all(
 
 @router.get("/{id}")
 async def read_one(db: SessionDep, id: int) -> {{ e.name }}Out:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     return {{name_lower}}
 
 @router.post("/", status_code=201)
@@ -38,21 +38,21 @@ async def create(
 async def update(
     *, db: SessionDep, id: int, {{ name_lower }}_in: {{ e.name }}Update
 ) -> {{ e.name }}Out:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     return await crud.{{ name_lower }}.update(db, db_obj={{name_lower}}, obj_in={{ name_lower }}_in)
 
 @router.patch("/{id}")
 async def patch(
     *, db: SessionDep, id: int, {{ name_lower }}_in: {{ e.name }}Patch
 ) -> {{ e.name }}Out:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     return await crud.{{ name_lower }}.update(db, db_obj={{name_lower}}, obj_in={{ name_lower }}_in)
 
 @router.delete("/{id}", status_code=204)
 async def delete(
     *, db: SessionDep, id: int
 ) -> None:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     return await crud.{{ name_lower }}.delete(db, db_obj={{name_lower}})
 
 
@@ -66,7 +66,7 @@ async def delete(
 async def set_{{ field.name }}(
     *, db: SessionDep, id: int, file: UploadFile
 ) -> {{ e.name }}Out:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     {{name_lower}}.{{ field.name }} = file
     return await crud.{{ name_lower }}.save(db, db_obj={{name_lower}})
 
@@ -76,7 +76,7 @@ async def set_{{ field.name }}(
 async def remove_{{ field.name }}(
     *, db: SessionDep, id: int
 ) -> None:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     {{name_lower}}.{{ field.name }} = None
     await crud.{{ name_lower }}.save(db, db_obj={{name_lower}})
 
@@ -92,14 +92,14 @@ async def remove_{{ field.name }}(
 
 @router.get("/{id}/{{r.field_name}}")
 async def get_associated_{{r.field_name}}(db: SessionDep, id: int) -> List[{{ r.to }}Out]:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     return {{name_lower}}.{{r.field_name}}
 
 @router.put("/{id}/{{r.field_name}}")
 async def add_{{r.field_name}}_by_ids(db: SessionDep, id: int, ids: List[int]) -> List[{{ r.to }}Out]:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     for _id in ids:
-        {{name_lower}}.{{r.field_name}}.append(await crud.{{ r.to | lower }}.getOr404(db, _id))
+        {{name_lower}}.{{r.field_name}}.append(await crud.{{ r.to | lower }}.get_or_404(db, _id))
     {{name_lower}} = await crud.{{name_lower}}.save(db, {{name_lower}})
     return {{name_lower}}.{{r.field_name}}
 
@@ -107,13 +107,13 @@ async def add_{{r.field_name}}_by_ids(db: SessionDep, id: int, ids: List[int]) -
 
 @router.get("/{id}/{{r.backref_field_name}}")
 async def get_associated_{{r.backref_field_name}}(db: SessionDep, id: int) -> Optional[{{ r.from_ }}Out]:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     return {{name_lower}}.{{r.backref_field_name}}
 
 @router.put("/{id}/{{r.backref_field_name}}/{{ '{' }}{{r.backref_field_name}}_id}")
 async def set_{{r.backref_field_name}}_by_id(db: SessionDep, id: int, {{r.backref_field_name}}_id: int) -> Optional[{{ r.from_ }}Out]:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
-    {{name_lower}}.{{r.backref_field_name}} = await crud.{{ r.from_ | lower }}.getOr404(db, {{r.backref_field_name}}_id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
+    {{name_lower}}.{{r.backref_field_name}} = await crud.{{ r.from_ | lower }}.get_or_404(db, {{r.backref_field_name}}_id)
     {{name_lower}} = await crud.{{name_lower}}.save(db, {{name_lower}})
     return {{name_lower}}.{{r.backref_field_name}}
 
@@ -126,13 +126,13 @@ async def set_{{r.backref_field_name}}_by_id(db: SessionDep, id: int, {{r.backre
 
 @router.get("/{id}/{{r.field_name}}")
 async def get_associated_{{r.field_name}}(db: SessionDep, id: int) -> Optional[{{ r.to }}Out]:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     return {{name_lower}}.{{r.field_name}}
 
 @router.put("/{id}/{{r.field_name}}/{{ '{' }}{{r.field_name}}_id}")
 async def set_{{r.field_name}}_by_id(db: SessionDep, id: int, {{r.field_name}}_id: int) -> Optional[{{ r.to }}Out]:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
-    {{name_lower}}.{{r.field_name}} = await crud.{{ r.to | lower }}.getOr404(db, {{r.field_name}}_id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
+    {{name_lower}}.{{r.field_name}} = await crud.{{ r.to | lower }}.get_or_404(db, {{r.field_name}}_id)
     {{name_lower}} = await crud.{{name_lower}}.save(db, {{name_lower}})
     return {{name_lower}}.{{r.field_name}}
 
@@ -140,13 +140,13 @@ async def set_{{r.field_name}}_by_id(db: SessionDep, id: int, {{r.field_name}}_i
 
 @router.get("/{id}/{{r.backref_field_name}}")
 async def get_associated_{{r.backref_field_name}}(db: SessionDep, id: int) -> Optional[{{ r.from_ }}Out]:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     return {{name_lower}}.{{r.backref_field_name}}
 
 @router.put("/{id}/{{r.backref_field_name}}/{{ '{' }}{{r.backref_field_name}}_id}")
 async def set_{{r.backref_field_name}}_by_id(db: SessionDep, id: int, {{r.backref_field_name}}_id: int) -> Optional[{{ r.from_ }}Out]:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
-    {{name_lower}}.{{r.backref_field_name}} = await crud.{{ r.from_ | lower }}.getOr404(db, {{r.backref_field_name}}_id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
+    {{name_lower}}.{{r.backref_field_name}} = await crud.{{ r.from_ | lower }}.get_or_404(db, {{r.backref_field_name}}_id)
     {{name_lower}} = await crud.{{name_lower}}.save(db, {{name_lower}})
     return {{name_lower}}.{{r.backref_field_name}}
 
@@ -159,14 +159,14 @@ async def set_{{r.backref_field_name}}_by_id(db: SessionDep, id: int, {{r.backre
 
 @router.get("/{id}/{{r.field_name}}")
 async def get_associated_{{r.field_name}}(db: SessionDep, id: int) -> List[{{ r.to }}Out]:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     return {{name_lower}}.{{r.field_name}}
 
 @router.put("/{id}/{{r.field_name}}")
 async def add_{{r.field_name}}_by_ids(db: SessionDep, id: int, ids: List[int]) -> List[{{ r.to }}Out]:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     for _id in ids:
-        {{name_lower}}.{{r.field_name}}.append(await crud.{{ r.to | lower }}.getOr404(db, _id))
+        {{name_lower}}.{{r.field_name}}.append(await crud.{{ r.to | lower }}.get_or_404(db, _id))
     {{name_lower}} = await crud.{{name_lower}}.save(db, {{name_lower}})
     return {{name_lower}}.{{r.field_name}}
 
@@ -174,14 +174,14 @@ async def add_{{r.field_name}}_by_ids(db: SessionDep, id: int, ids: List[int]) -
 
 @router.get("/{id}/{{r.backref_field_name}}")
 async def get_associated_{{r.backref_field_name}}(db: SessionDep, id: int) -> List[{{ r.from_ }}Out]:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     return {{name_lower}}.{{r.backref_field_name}}
 
 @router.put("/{id}/{{r.backref_field_name}}")
 async def add_{{r.backref_field_name}}_by_ids(db: SessionDep, id: int, ids: List[int]) -> List[{{ r.from_ }}Out]:
-    {{name_lower}} = await crud.{{ name_lower }}.getOr404(db, id)
+    {{name_lower}} = await crud.{{ name_lower }}.get_or_404(db, id)
     for _id in ids:
-        {{name_lower}}.{{r.backref_field_name}}.append(await crud.{{ r.from_ | lower }}.getOr404(db, _id))
+        {{name_lower}}.{{r.backref_field_name}}.append(await crud.{{ r.from_ | lower }}.get_or_404(db, _id))
     {{name_lower}} = await crud.{{name_lower}}.save(db, {{name_lower}})
     return {{name_lower}}.{{r.backref_field_name}}
         {% endif %}

@@ -2,6 +2,6 @@ import enum
 
 
 class Status(str, enum.Enum):
-    OPEN = "OPEN"
-    IN_PROGRESS = "IN_PROGRESS"
-    COMPLETED = "COMPLETED"
+    OPEN = "open"
+    IN_PROGRESS = "in progress"
+    COMPLETED = "completed"
