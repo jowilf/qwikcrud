@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, List, Optional
+from typing import Any, Optional
 
 from pydantic import BaseModel, Field, model_validator
 from rich.console import Console
@@ -79,8 +79,8 @@ class Constraints(BaseModel):
     multiple_of: Optional[float] = Field(None)
     min_length: Optional[int] = Field(None)
     max_length: Optional[int] = Field(None)
-    mime_types: Optional[List[str]] = Field(None)
-    allowed_values: Optional[List[str]] = Field(None)
+    mime_types: Optional[list[str]] = Field(None)
+    allowed_values: Optional[list[str]] = Field(None)
 
     def get_allowed_values(self):
         return self.allowed_values or []
@@ -170,7 +170,7 @@ class FieldModel(BaseModel):
 
 class Entity(BaseModel):
     name: str = Field(...)
-    fields: List[FieldModel] = Field(...)
+    fields: list[FieldModel] = Field(...)
 
     @model_validator(mode="after")
     def root_validator(self) -> "Entity":
@@ -213,8 +213,8 @@ class Relation(BaseModel):
 class App(BaseModel):
     name: str = Field(...)
     description: str = Field(...)
-    entities: List[Entity] = Field(...)
-    relations: List[Relation] = Field(...)
+    entities: list[Entity] = Field(...)
+    relations: list[Relation] = Field(...)
 
     def has_file(self) -> bool:
         for entity in self.entities:

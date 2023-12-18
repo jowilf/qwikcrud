@@ -1,7 +1,6 @@
 import logging
 import sys
 from pathlib import Path
-from typing import Dict, Type
 
 import click
 import prompt_toolkit as pt
@@ -35,7 +34,7 @@ def main(output_dir: str, ai_provider: AIProvider) -> None:
     history = Path().home() / ".qwikcrud-prompt-history.txt"
     session = pt.PromptSession(history=FileHistory(str(history)))
 
-    ai_provider_map: Dict[str, Type[AIProvider]] = {
+    ai_provider_map: dict[str, type[AIProvider]] = {
         "google": GoogleProvider,
         "openai": OpenAIProvider,
     }

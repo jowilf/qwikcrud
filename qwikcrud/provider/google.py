@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Dict, List
+from typing import Any
 
 import google.generativeai as genai
 
@@ -16,7 +16,7 @@ class GoogleProvider(AIProvider):
         self.model = genai.GenerativeModel(settings.google_model)
         with open(h.path_to("prompts/system")) as f:
             system_message = f.read()
-        self.messages: List[Dict[str, Any]] = [
+        self.messages: list[dict[str, Any]] = [
             {
                 "role": "user",
                 "parts": [system_message],
