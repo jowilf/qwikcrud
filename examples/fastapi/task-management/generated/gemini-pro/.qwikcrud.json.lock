@@ -1,0 +1,154 @@
+{
+    "name": "Task Manager",
+    "description": "An application for managing tasks and collaboration.",
+    "entities": [
+        {
+            "name": "User",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "ID"
+                },
+                {
+                    "name": "username",
+                    "type": "String",
+                    "constraints": {
+                        "unique": true,
+                        "max_length": 50
+                    }
+                },
+                {
+                    "name": "email",
+                    "type": "Email",
+                    "constraints": {
+                        "unique": true,
+                        "max_length": 100
+                    }
+                },
+                {
+                    "name": "password",
+                    "type": "String",
+                    "constraints": {
+                        "min_length": 8,
+                        "max_length": 100
+                    }
+                },
+                {
+                    "name": "first_name",
+                    "type": "String",
+                    "constraints": {
+                        "max_length": 50
+                    }
+                },
+                {
+                    "name": "last_name",
+                    "type": "String",
+                    "constraints": {
+                        "max_length": 50
+                    }
+                },
+                {
+                    "name": "avatar",
+                    "type": "Image"
+                }
+            ]
+        },
+        {
+            "name": "Project",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "ID"
+                },
+                {
+                    "name": "name",
+                    "type": "String",
+                    "constraints": {
+                        "unique": true,
+                        "max_length": 100
+                    }
+                },
+                {
+                    "name": "description",
+                    "type": "Text"
+                }
+            ]
+        },
+        {
+            "name": "Task",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "ID"
+                },
+                {
+                    "name": "task_name",
+                    "type": "String",
+                    "constraints": {
+                        "max_length": 100
+                    }
+                },
+                {
+                    "name": "description",
+                    "type": "Text"
+                },
+                {
+                    "name": "due_date",
+                    "type": "Date"
+                },
+                {
+                    "name": "start_date",
+                    "type": "Date"
+                },
+                {
+                    "name": "status",
+                    "type": "Enum",
+                    "constraints": {
+                        "allowed_values": [
+                            "Open",
+                            "In Progress",
+                            "Completed"
+                        ]
+                    }
+                },
+                {
+                    "name": "instruction_file",
+                    "type": "File",
+                    "constraints": {
+                        "mime_types": [
+                            "application/pdf",
+                            "application/msword",
+                            "text/plain"
+                        ]
+                    }
+                }
+            ]
+        }
+    ],
+    "relations": [
+        {
+            "name": "User_Project",
+            "type": "MANY_TO_MANY",
+            "from": "User",
+            "to": "Project",
+            "field_name": "projects",
+            "backref_field_name": "users"
+        },
+        {
+            "name": "Project_Task",
+            "type": "ONE_TO_MANY",
+            "from": "Project",
+            "to": "Task",
+            "field_name": "tasks",
+            "backref_field_name": "project"
+        },
+        {
+            "name": "Task_User",
+            "type": "MANY_TO_MANY",
+            "from": "Task",
+            "to": "User",
+            "field_name": "users",
+            "backref_field_name": "tasks"
+        }
+    ]
+}

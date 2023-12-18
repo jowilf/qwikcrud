@@ -1,5 +1,6 @@
 import contextlib
 import os
+import re
 import shutil
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -35,6 +36,22 @@ def upper_first_character(text: str) -> str:
 
 def snake_case(text: str) -> str:
     return "".join(["_" + c.lower() if c.isupper() else c for c in text]).lstrip("_")
+
+
+def extract_json_from_markdown(markdown_text):
+    # Regular expression to find a JSON object in the text
+    json_pattern = re.compile(r"```(json)?(.*)```", re.DOTALL)
+
+    # Attempt to find a JSON object in the text
+    json_match = json_pattern.search(markdown_text)
+
+    if json_match:
+        # If match found, extract the JSON string from the code block
+        json_str = json_match.group(2)
+    else:
+        # If no JSON object is found, consider the entire text as JSON
+        json_str = markdown_text
+    return json_str
 
 
 def apply_python_naming_convention(app: "App"):

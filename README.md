@@ -41,6 +41,14 @@ pip install qwikcrud
 
 Before running the command-line tool, ensure the following environment variables are configured:
 
+#### Google
+
+```shell
+export GOOGLE_API_KEY="your_google_api_key"
+```
+
+#### OpenAI
+
 ```shell
 export OPENAI_API_KEY="your_openai_api_key"
 export OPENAI_MODEL="your_openai_model" # Defaults to "gpt-3.5-turbo-1106"
@@ -50,8 +58,16 @@ export OPENAI_MODEL="your_openai_model" # Defaults to "gpt-3.5-turbo-1106"
 
 To generate your application, open your terminal, run the following command and follow the instructions:
 
+#### Google
+
 ```shell
 qwikcrud -o output_dir
+```
+
+#### OpenAI
+
+```shell
+qwikcrud -o output_dir --ai openai
 ```
 
 ### Generated Application stack
@@ -69,7 +85,8 @@ qwikcrud -o output_dir
 
 ## Roadmap
 
-`qwikcrud` is designed to support various frameworks and AI providers. Here's an overview of what has been accomplished and
+`qwikcrud` is designed to support various frameworks and AI providers. Here's an overview of what has been accomplished
+and
 what is planned for the future:
 
 ### Frameworks
@@ -83,15 +100,19 @@ what is planned for the future:
 
 ### AI providers
 
+- [x] Google (_default_)
 - [x] OpenAI
 - [ ] Anthropic
-- [ ] Ollama (self-hosted LLMs)
+- [ ] Ollama (_self-hosted LLMs_)
 
 ## Pricing
 
 `qwikcrud` makes one API call per prompt and add a system prompt of around 900 tokens to
-your prompt. For example, with the OpenAI GPT-3.5-turbo-1106 model, it will cost around $0.003 to generate your application.
-The cost may vary depending on the output length.
+your prompt.
+
+- **Google**: Currently free.
+- **OpenAI**: With the default gpt-3.5-turbo model, each app generation costs approximately $0.003. The exact cost can
+  vary slightly based on the model selected and the output length
 
 ## Contributing
 

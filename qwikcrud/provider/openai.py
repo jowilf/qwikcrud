@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Dict, List
+from typing import Any
 
 from openai import OpenAI
 
@@ -15,7 +15,7 @@ class OpenAIProvider(AIProvider):
         self.client = OpenAI(api_key=settings.openai_api_key)
         with open(path_to("prompts/system")) as f:
             system_message = f.read()
-        self.messages: List[Dict[str, Any]] = [
+        self.messages: list[dict[str, Any]] = [
             {
                 "role": "system",
                 "content": system_message,
@@ -39,7 +39,9 @@ class OpenAIProvider(AIProvider):
                 "content": completion.choices[0].message.content,
             }
         )
-        logging.debug(f"Result from OpenAI: {completion.choices[0].message.content}")
+        logging.debug(
+            f"Result from {self.get_name()}: {completion.choices[0].message.content}"
+        )
         return App.model_validate_json(
             completion.choices[0].message.content, strict=False
         )
