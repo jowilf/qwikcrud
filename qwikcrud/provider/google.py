@@ -17,13 +17,17 @@ class GoogleProvider(AIProvider):
         with open(h.path_to("prompts/system")) as f:
             system_message = f.read()
         self.messages: list[dict[str, Any]] = [
+            # Workaround for system message
             {
                 "role": "user",
                 "parts": [system_message],
             },
             {
                 "role": "model",
-                "parts": ["OK"],
+                "parts": [
+                    "Please provide a brief description of your app and any specific"
+                    " features or functionalities you have in mind."
+                ],
             },
         ]
 
