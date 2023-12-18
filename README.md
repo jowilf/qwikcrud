@@ -58,7 +58,6 @@ export OPENAI_MODEL="your_openai_model" # Defaults to "gpt-3.5-turbo-1106"
 
 To generate your application, open your terminal, run the following command and follow the instructions:
 
-
 #### Google
 
 ```shell
@@ -113,10 +112,8 @@ your prompt.
 
 - **Google**: Currently free.
 - **OpenAI**: With the default gpt-3.5-turbo model, each app generation costs approximately $0.003. The exact cost can
-  vary slightly based on:
-    - Model selected - Upgrading to more advanced models increases the per-token price
-    - Output length - Longer generated code results in more tokens
-  
+  vary slightly based on the model selected and the output length
+
 ## Contributing
 
 Contributions are welcome and greatly appreciated! If you have ideas for improvements or encounter issues, please feel
