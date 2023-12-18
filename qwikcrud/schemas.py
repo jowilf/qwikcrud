@@ -257,7 +257,8 @@ class App(BaseModel):
 
             for relation in self.relations:
                 console.print(
-                    f"[bold cyan]{relation.from_}[/bold cyan] ([magenta]{relation.field_name}[/magenta])"
+                    f"[bold cyan]{relation.from_}[/bold cyan]"
+                    f" ([magenta]{relation.field_name}[/magenta])"
                     f" --[{relation.type_}]--> [bold cyan]{relation.to}[/bold cyan]"
                     f" ([magenta]{relation.backref_field_name}[/magenta])"
                 )

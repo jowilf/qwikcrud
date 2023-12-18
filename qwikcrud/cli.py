@@ -1,6 +1,7 @@
 import logging
 import sys
 from pathlib import Path
+from typing import Dict, Type
 
 import click
 import prompt_toolkit as pt
@@ -12,6 +13,8 @@ from rich.status import Status
 from qwikcrud import __version__
 from qwikcrud.generator import FastAPIAppGenerator
 from qwikcrud.logger import setup_logging
+from qwikcrud.provider.base import AIProvider
+from qwikcrud.provider.google import GoogleProvider
 from qwikcrud.provider.openai import OpenAIProvider
 
 
@@ -19,13 +22,24 @@ from qwikcrud.provider.openai import OpenAIProvider
 @click.option(
     "-o", "--output-dir", default=".", help="Output directory for the generated app."
 )
-def main(output_dir: str) -> None:
+@click.option(
+    "--ai",
+    "ai_provider",
+    type=click.Choice(["google", "openai"]),
+    default="google",
+    help="Choose the AI provider to use for generation. Default is Google.",
+)
+def main(output_dir: str, ai_provider: AIProvider) -> None:
     setup_logging()
 
     history = Path().home() / ".qwikcrud-prompt-history.txt"
     session = pt.PromptSession(history=FileHistory(str(history)))
 
-    ai = OpenAIProvider()
+    ai_provider_map: Dict[str, Type[AIProvider]] = {
+        "google": GoogleProvider,
+        "openai": OpenAIProvider,
+    }
+    ai = ai_provider_map[ai_provider]()
     code_generator = FastAPIAppGenerator(Path(output_dir).resolve())
 
     console = Console()
@@ -37,7 +51,8 @@ def main(output_dir: str) -> None:
     is_first_prompt = True
     while True:
         prompt = session.prompt(
-            f"qwikcrud ({'Describe your app' if is_first_prompt else 'Specify any modifications or enhancements'}) ➤ ",
+            "qwikcrud"
+            f" ({'Describe your app' if is_first_prompt else 'Specify any modifications or enhancements'}) ➤ ",
             auto_suggest=AutoSuggestFromHistory(),
         )
         if prompt == "/exit":
@@ -57,7 +72,8 @@ def main(output_dir: str) -> None:
                 "Follow the instructions in the README.md file to run your application."
             )
             console.print(
-                "\nYou can request changes if the generated app doesn't meet your expectations."
+                "\nYou can request changes if the generated app doesn't meet your"
+                " expectations."
             )
             is_first_prompt = False
         except Exception as e:

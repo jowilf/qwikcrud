@@ -39,7 +39,9 @@ class OpenAIProvider(AIProvider):
                 "content": completion.choices[0].message.content,
             }
         )
-        logging.debug(f"Result from OpenAI: {completion.choices[0].message.content}")
+        logging.debug(
+            f"Result from {self.get_name()}: {completion.choices[0].message.content}"
+        )
         return App.model_validate_json(
             completion.choices[0].message.content, strict=False
         )
